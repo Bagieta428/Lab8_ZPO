@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Lab8_ZPO"
         mc:Ignorable="d"
         
+        SizeToContent="WidthAndHeight"
         Background="Black" Icon="resources/calculator_icon.png"
-        Title="Kalkulator" Height="Auto" Width="Auto" ResizeMode="CanMinimize">
+        Title="Kalkulator" ResizeMode="CanMinimize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80" />
@@ -46,17 +47,16 @@
                 BorderThickness="2" BorderBrush="LightGray"
                 Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8,0,8,8">
         </Border>
-        
-        <TextBlock Text="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST" FontSize="40" FontWeight="DemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+
+        <TextBlock x:Name="inputTextBlock" Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}" FontSize="40" FontWeight="DemiBold" TextWrapping="NoWrap"
                    Foreground="White"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Margin="8" Padding="15,15,0,0">
-            
         </TextBlock>
-        
+
         <!--################-->
         <!--##### ROW 1 ####-->
         <!--################-->
-        <TextBlock Text="TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST" FontSize="40" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"
+        <TextBlock x:Name="outputTextBlock" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" FontSize="40" FontWeight="SemiBold" TextWrapping="NoWrap"
                    Foreground="White"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8" Padding="15,6,0,0">
 
@@ -67,7 +67,6 @@
         <!--################-->
         <ProgressBar x:Name="progressBar1" Value="20" Maximum="100"
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="7" Margin="8">
-            
         </ProgressBar>
 
         <!--###########################-->
@@ -77,9 +76,10 @@
         <!--################-->
         <!--### COLUMN 0 ###-->
         <!--################-->
-        <Button Content="sin"
+        <Button x:Name="sinButton" Content="sin" 
                 FontSize="20" FontWeight="Bold" Width="120" Background="LightSkyBlue" BorderThickness="2" BorderBrush="AliceBlue"
-                HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="8">
+                HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="8"
+                Click="sinButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />
@@ -87,9 +87,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="π" 
+        <Button x:Name="piButton" Content="π" 
                 FontSize="40" FontWeight="Black" Background="LightSkyBlue" BorderThickness="3" BorderBrush="AliceBlue"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="5" Margin="8" Padding="0,-8,3,0">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="5" Margin="8" Padding="0,-8,3,0"
+                Click="piButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -97,9 +98,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="Y^X"
+        <Button x:Name="exponentiationButton" Content="Y^X"
                 FontSize="25" FontWeight="Black" Background="LightSkyBlue" BorderThickness="3" BorderBrush="AliceBlue"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="6" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="6" Margin="8"
+                Click="exponentiationButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -107,9 +109,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="LOG"
+        <Button x:Name="logarithmButton" Content="LOG"
                 FontSize="40" FontWeight="Black" Background="LightSkyBlue" BorderThickness="3" BorderBrush="AliceBlue"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Margin="8" Padding="0,-3,2,0">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Margin="8" Padding="0,-3,2,0"
+                Click="logarithmButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8"/>
@@ -117,9 +120,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="Oblicz π"
+        <Button x:Name="calculatePiButton" Content="Oblicz π"
                 FontSize="32" FontWeight="Bold" Background="DarkCyan" BorderThickness="3" BorderBrush="LightCyan"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" Margin="8"
+                Click="calculatePiButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8"/>
@@ -130,9 +134,10 @@
         <!--################-->
         <!--### COLUMN 1 ###-->
         <!--################-->
-        <Button Content="√x"
+        <Button x:Name="rootButton" Content="√x"
                 FontSize="40" FontWeight="Black" Background="LightSkyBlue" BorderThickness="3" BorderBrush="AliceBlue"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="5" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="5" Margin="8"
+                Click="rootButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -140,9 +145,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="x/x"
+        <Button x:Name="divideXXButton" Content="x/x"
                 FontSize="30" FontWeight="Black" Background="LightSkyBlue" BorderThickness="3" BorderBrush="AliceBlue"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" Margin="8"
+                Click="divideXXButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -153,9 +159,10 @@
         <!--################-->
         <!--### COLUMN 2 ###-->
         <!--################-->
-        <Button Content="cos"
+        <Button x:Name="cosButton" Content="cos"
                 FontSize="20" FontWeight="Bold" Width="120" Background="LightSkyBlue" BorderThickness="2" BorderBrush="AliceBlue"
-                HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4" Margin="-20,8,8,8">
+                HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4" Margin="-20,8,8,8"
+                Click="cosButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />
@@ -163,9 +170,10 @@
             </Button.Resources>
         </Button>
         
-        <Button Content="7" 
+        <Button x:Name="sevenButton" Content="7" 
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="5" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="5" Margin="8"
+                Click="sevenButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -173,9 +181,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="4"
+        <Button x:Name="fourButton" Content="4"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="6" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="6" Margin="8"
+                Click="fourButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -183,9 +192,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="1"
+        <Button x:Name="oneButton" Content="1"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="7" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="7" Margin="8"
+                Click="oneButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -193,9 +203,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="0"
+        <Button x:Name="zeroButton" Content="0"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="8" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="8" Margin="8"
+                Click="zeroButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -206,9 +217,10 @@
         <!--################-->
         <!--### COLUMN 3 ###-->
         <!--################-->
-        <Button Content="8" 
+        <Button x:Name="eightButton" Content="8" 
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="5" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="5" Margin="8"
+                Click="eightButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -216,9 +228,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="5"
+        <Button x:Name="fiveButton" Content="5"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="6" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="6" Margin="8"
+                Click="fiveButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -226,9 +239,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="2"
+        <Button x:Name="twoButton" Content="2"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="7" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="7" Margin="8"
+                Click="twoButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -236,9 +250,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content=","
+        <Button x:Name="commaButton" Content=","
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="8" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.Row="8" Margin="8"
+                Click="commaButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -249,9 +264,10 @@
         <!--################-->
         <!--### COLUMN 4 ###-->
         <!--################-->
-        <Button Content="tan"
+        <Button x:Name="tanButton" Content="tan"
                 FontSize="20" FontWeight="Bold" Width="120" Background="LightSkyBlue" BorderThickness="2" BorderBrush="AliceBlue"
-                HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="4" Margin="-48,8,8,8">
+                HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="4" Margin="-48,8,8,8"
+                Click="tanButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />
@@ -259,9 +275,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="9" 
+        <Button x:Name="nineButton" Content="9" 
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="5" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="5" Margin="8"
+                Click="nineButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -269,9 +286,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="6"
+        <Button x:Name="sixButton" Content="6"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="6" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="6" Margin="8"
+                Click="sixButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -279,9 +297,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="3"
+        <Button x:Name="threeButton" Content="3"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="7" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="7" Margin="8"
+                Click="threeButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -289,9 +308,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="(-)"
+        <Button x:Name="addMinusButton" Content="(-)"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="8" Margin="8" Padding="0,-8,1,0">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.Row="8" Margin="8" Padding="0,-8,1,0"
+                Click="addMinusButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -302,9 +322,10 @@
         <!--################-->
         <!--### COLUMN 5 ###-->
         <!--################-->
-        <Button Content="("
+        <Button x:Name="parenthesisLeftButton" Content="("
                 FontSize="20" FontWeight="Black" Background="LightSkyBlue" BorderThickness="2" BorderBrush="AliceBlue"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="4" Margin="8" Padding="0,0,0,5">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="4" Margin="8" Padding="0,0,0,5"
+                Click="parenthesisLeftButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />
@@ -312,9 +333,10 @@
             </Button.Resources>
         </Button>
         
-        <Button Content="%" 
+        <Button x:Name="divideButton" Content="%" 
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="5" Margin="8" Padding="0,0,0,4">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="5" Margin="8" Padding="0,0,0,4"
+                Click="divideButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -322,9 +344,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="X"
+        <Button x:Name="multiplicationButton" Content="X"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="6" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="6" Margin="8"
+                Click="multiplicationButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -332,9 +355,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="-"
+        <Button x:Name="minusButton" Content="-"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="7" Margin="8" Padding="0,-10,2,0">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="7" Margin="8" Padding="0,-10,2,0"
+                Click="minusButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -342,9 +366,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="+"
+        <Button x:Name="addButton" Content="+"
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="8" Margin="8" Padding="0,-10,1,0">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="8" Margin="8" Padding="0,-10,1,0"
+                Click="addButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -355,9 +380,10 @@
         <!--################-->
         <!--### COLUMN 6 ###-->
         <!--################-->
-        <Button Content=")"
+        <Button x:Name="parenthesisRightButton" Content=")"
                 FontSize="20" FontWeight="Black" Background="LightSkyBlue" BorderThickness="2" BorderBrush="AliceBlue"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="4" Margin="8" Padding="0,0,0,5">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="4" Margin="8" Padding="0,0,0,5"
+                Click="parenthesisRightButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5" />
@@ -365,9 +391,10 @@
             </Button.Resources>
         </Button>
         
-        <Button Content="C" 
+        <Button x:Name="clearAllButton" Content="C" 
                 FontSize="50" FontWeight="Black" Background="DarkCyan" BorderThickness="3" BorderBrush="LightCyan"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="5" Margin="8" Padding="0,-7,3,0">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="5" Margin="8" Padding="0,-7,3,0"
+                Click="clearAllButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -375,9 +402,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="DEL"
+        <Button x:Name="deleteButton" Content="DEL"
                 FontSize="25" FontWeight="Black" Background="DarkCyan" BorderThickness="3" BorderBrush="LightCyan"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="6" Margin="8">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="6" Margin="8"
+                Click="deleteButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -385,9 +413,10 @@
             </Button.Resources>
         </Button>
 
-        <Button Content="="
+        <Button x:Name="calculateButton" Content="="
                 FontSize="40" FontWeight="Black" Background="DarkCyan" BorderThickness="3" BorderBrush="LightCyan"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="7" Grid.RowSpan="2" Margin="8" Padding="0,0,0,12">
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="7" Grid.RowSpan="2" Margin="8" Padding="0,0,0,12"
+                Click="calculateButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
