@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Daniel\\source\\repos\\Lab8_ZPO\\Lab8_ZPO\\Lab8_ZPO.csproj",
+      "projectUniqueName": "C:\\Users\\Daniel\\source\\repos\\Lab8_ZPO\\Lab8_ZPO\\Lab8_ZPO\\Lab8_ZPO.csproj",
       "projectName": "Lab8_ZPO",
-      "projectPath": "C:\\Users\\Daniel\\source\\repos\\Lab8_ZPO\\Lab8_ZPO\\Lab8_ZPO.csproj",
+      "projectPath": "C:\\Users\\Daniel\\source\\repos\\Lab8_ZPO\\Lab8_ZPO\\Lab8_ZPO\\Lab8_ZPO.csproj",
       "packagesPath": "C:\\Users\\Daniel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Daniel\\source\\repos\\Lab8_ZPO\\Lab8_ZPO\\obj\\",
+      "outputPath": "C:\\Users\\Daniel\\source\\repos\\Lab8_ZPO\\Lab8_ZPO\\Lab8_ZPO\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Daniel\\AppData\\Roaming\\NuGet\\NuGet.Config",

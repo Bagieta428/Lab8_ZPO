@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Lab8_ZPO"
         mc:Ignorable="d"
         
-        Background="Black" Icon="resources/Calculator_icon.png"
+        Background="Black" Icon="resources/calculator_icon.png"
         Title="Kalkulator" Height="Auto" Width="Auto" ResizeMode="CanMinimize">
     <Grid>
         <Grid.ColumnDefinitions>
