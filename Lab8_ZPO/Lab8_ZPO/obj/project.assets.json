@@ -1,11 +1,45 @@
 {
   "version": 3,
   "targets": {
-    "net8.0-windows7.0": {}
+    "net8.0-windows7.0": {
+      "PeterO.Numbers/1.8.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.0/Numbers.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard1.0/Numbers.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "PeterO.Numbers/1.8.2": {
+      "sha512": "d+A5KLoWbwOTpvubPaGXLgCzANE00jXmsT+yneHwLe2OlobBBFLaIHyoDwmekuHM17z9hU++RF6mL+zZ2x69nA==",
+      "type": "package",
+      "path": "petero.numbers/1.8.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/Numbers.dll",
+        "lib/net20/Numbers.xml",
+        "lib/net40/Numbers.dll",
+        "lib/net40/Numbers.xml",
+        "lib/netstandard1.0/Numbers.dll",
+        "lib/netstandard1.0/Numbers.xml",
+        "petero.numbers.1.8.2.nupkg.sha512",
+        "petero.numbers.nuspec"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0-windows7.0": []
+    "net8.0-windows7.0": [
+      "PeterO.Numbers >= 1.8.2"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Daniel\\.nuget\\packages\\": {}
@@ -50,6 +84,12 @@
     "frameworks": {
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
+        "dependencies": {
+          "PeterO.Numbers": {
+            "target": "Package",
+            "version": "[1.8.2, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

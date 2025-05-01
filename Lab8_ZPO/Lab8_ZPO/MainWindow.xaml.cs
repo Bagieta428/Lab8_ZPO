@@ -23,7 +23,9 @@ namespace Lab8_ZPO
 
         private void calculatePiButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var piWindow = new PiWindow();
+            piWindow.Owner = this;
+            piWindow.Show();
         }
 
         private void sinButton_Click(object sender, RoutedEventArgs e)

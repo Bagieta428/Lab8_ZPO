@@ -34,7 +34,7 @@
         <!--###########################-->
         <!--######### DISPLAY #########-->
         <!--###########################-->
-        
+
         <!--################-->
         <!--##### ROW 0 ####-->
         <!--################-->
@@ -48,16 +48,16 @@
                 Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8,0,8,8">
         </Border>
 
-        <TextBlock x:Name="inputTextBlock" Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}" FontSize="40" FontWeight="DemiBold" TextWrapping="NoWrap"
-                   Foreground="White"
+        <TextBlock x:Name="inputTextBlock" Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"
+                   FontSize="40" FontWeight="DemiBold" Foreground="White"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Margin="8" Padding="15,15,0,0">
         </TextBlock>
 
         <!--################-->
         <!--##### ROW 1 ####-->
         <!--################-->
-        <TextBlock x:Name="outputTextBlock" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" FontSize="40" FontWeight="SemiBold" TextWrapping="NoWrap"
-                   Foreground="White"
+        <TextBlock x:Name="outputTextBlock" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"
+                   FontSize="40" FontWeight="SemiBold" Foreground="White"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8" Padding="15,6,0,0">
 
         </TextBlock>
@@ -65,14 +65,14 @@
         <!--################-->
         <!--##### ROW 2 ####-->
         <!--################-->
-        <ProgressBar x:Name="progressBar1" Value="20" Maximum="100"
+        <ProgressBar x:Name="calculatrionProgressBar" Value="20" Maximum="100"
                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="7" Margin="8">
         </ProgressBar>
 
         <!--###########################-->
         <!--######### BUTTONS #########-->
         <!--###########################-->
-        
+
         <!--################-->
         <!--### COLUMN 0 ###-->
         <!--################-->
@@ -169,7 +169,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        
+
         <Button x:Name="sevenButton" Content="7" 
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="5" Margin="8"
@@ -332,7 +332,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        
+
         <Button x:Name="divideButton" Content="%" 
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="5" Margin="8" Padding="0,0,0,4"
@@ -390,7 +390,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        
+
         <Button x:Name="clearAllButton" Content="C" 
                 FontSize="50" FontWeight="Black" Background="DarkCyan" BorderThickness="3" BorderBrush="LightCyan"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.Row="5" Margin="8" Padding="0,-7,3,0"
