@@ -11,17 +11,3 @@ Program powinien zawierać następujące funkcjonalności, związane z wielowąt
  7. Obsłużenie wyjątków.
  8. Użycie Tasków dzieci.
  9. Użycie kontynuacji
-
-Oceny: 3 na 3, 5 na 4, 7 na 5, 9 na 6
-
-UWAGA! wszystkie dokumenty, powinny być przesyłane tutaj w zadaniu.
-
-Wymagane nazwy oraz rozszerzenia:
-specyfikacja_<numer albumu>.pdf
-projekt_<numer albumu>.zip
-
-W przypadku zespołu dwuosobowego
-specyfikacja_<numer albumu 1>​_<numer albumu 2>.pdf
-projekt_<numer albumu 1>​_<numer albumu 2>.zip
-
-<numer albumu 1>, <numer albumu 2> - proszę zamienić na numer albumu.
