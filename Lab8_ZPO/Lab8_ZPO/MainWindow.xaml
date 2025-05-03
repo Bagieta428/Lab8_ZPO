@@ -48,7 +48,7 @@
                 Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8,0,8,8">
         </Border>
 
-        <TextBlock x:Name="inputTextBlock" Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"
+        <TextBlock x:Name="inputTextBlock" Text="{Binding InputText, Mode=OneWay}" TextWrapping="NoWrap"
                    FontSize="40" FontWeight="DemiBold" Foreground="White"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Margin="8" Padding="15,15,0,0">
         </TextBlock>
@@ -56,7 +56,7 @@
         <!--################-->
         <!--##### ROW 1 ####-->
         <!--################-->
-        <TextBlock x:Name="outputTextBlock" Text="{Binding Output, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"
+        <TextBlock x:Name="outputTextBlock" Text="{Binding OutputText, Mode=OneWay}" TextWrapping="Wrap"
                    FontSize="40" FontWeight="SemiBold" Foreground="White"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8" Padding="15,6,0,0">
 
@@ -98,10 +98,11 @@
             </Button.Resources>
         </Button>
 
-        <Button x:Name="exponentiationButton" Content="Y^X"
+        <Button x:Name="exponentiationButton"
                 FontSize="25" FontWeight="Black" Background="LightSkyBlue" BorderThickness="3" BorderBrush="AliceBlue"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="6" Margin="8"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="6" Margin="8" Padding="4"
                 Click="exponentiationButton_Click">
+            <Image Source="resources/exponentiation_icon.png"></Image>
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
@@ -333,9 +334,9 @@
             </Button.Resources>
         </Button>
 
-        <Button x:Name="divideButton" Content="%" 
+        <Button x:Name="divideButton" Content="/" 
                 FontSize="40" FontWeight="Black" Background="White" BorderThickness="3" BorderBrush="LightGray"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="5" Margin="8" Padding="0,0,0,4"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.Row="5" Margin="8" Padding="0,0,0,5"
                 Click="divideButton_Click">
             <Button.Resources>
                 <Style TargetType="Border">

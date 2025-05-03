@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="resources\calculator_icon.png" />
+    <None Remove="resources\exponentiation_icon.png" />
     <None Remove="resources\pi_icon.png" />
   </ItemGroup>
 
@@ -19,6 +20,9 @@
 
   <ItemGroup>
     <Resource Include="resources\calculator_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="resources\exponentiation_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="resources\pi_icon.png">

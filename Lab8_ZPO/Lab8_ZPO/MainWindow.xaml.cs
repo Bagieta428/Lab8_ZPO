@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Specialized;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,16 +10,48 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.ComponentModel;
+
 namespace Lab8_ZPO
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private string _inputText;
+        private string _outputText;
+        public string InputText
+        {
+            get => _inputText;
+            set
+            {
+                _inputText = value;
+                OnPropertyChanged(nameof(InputText));
+            }
+        }
+
+        public string OutputText
+        {
+            get => _outputText;
+            set
+            {
+                _outputText = value;
+                OnPropertyChanged(nameof(OutputText));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
+            InputText = string.Empty;
         }
 
         private void calculatePiButton_Click(object sender, RoutedEventArgs e)
@@ -30,22 +63,22 @@ namespace Lab8_ZPO
 
         private void sinButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "sin(";
+            InputText += "sin(";
         }
 
         private void cosButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "cos(";
+            InputText += "cos(";
         }
 
         private void tanButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "tan(";
+            InputText += "tan(";
         }
 
         private void rootButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "sqrt(";
+            InputText += "sqrt(";
         }
 
         private void divideXXButton_Click(object sender, RoutedEventArgs e)
@@ -55,122 +88,137 @@ namespace Lab8_ZPO
 
         private void piButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "π";
+            InputText += "π";
         }
 
         private void exponentiationButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "^";
+            InputText += "^";
         }
 
         private void logarithmButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "log(";
+            InputText += "log(";
         }
 
         private void zeroButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "0";
+            InputText += "0";
         }
 
         private void oneButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "1";
+            InputText += "1";
         }
 
         private void twoButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "2";
+            InputText += "2";
         }
 
         private void threeButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "3";
+            InputText += "3";
         }
 
         private void fourButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "4";
+            InputText += "4";
         }
 
         private void fiveButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "5";
+            InputText += "5";
         }
 
         private void sixButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "6";
+            InputText += "6";
         }
 
         private void sevenButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "7";
+            InputText += "7";
         }
 
         private void eightButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "8";
+            InputText += "8";
         }
 
         private void nineButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "9";
+            InputText += "9";
         }
 
         private void commaButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += ",";
+            InputText += ",";
         }
 
         private void addMinusButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "(-";
+            InputText += "(-";
         }
 
         private void parenthesisLeftButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "(";
+            InputText += "(";
         }
 
         private void parenthesisRightButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += ")";
+            InputText += ")";
         }
 
         private void divideButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "%";
+            InputText += "/";
         }
 
         private void multiplicationButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "*";
+            InputText += "*";
         }
 
         private void minusButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "-";
+            InputText += "-";
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text += "+";
+            InputText += "+";
         }
 
         private void clearAllButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text = string.Empty;
+            InputText = string.Empty;
+            OutputText = string.Empty;
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            inputTextBlock.Text = inputTextBlock.Text.Length > 0 ? inputTextBlock.Text.Substring(0, inputTextBlock.Text.Length - 1) : string.Empty;
+            InputText = InputText.Length > 0 ? InputText.Substring(0, InputText.Length - 1) : string.Empty;
         }
 
         private void calculateButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                var tokenizer = new Tokenizer();
+                var tokens = tokenizer.Tokenize(InputText);
 
+                var parser = new Parser(tokens);
+                var expression = parser.ParseExpression();
+
+                var result = expression.Evaluate();
+                OutputText = result.ToString();
+            }
+            catch (Exception ex)
+            {
+                InputText = ("Błąd składni");
+            }
         }
     }
 }

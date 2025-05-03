@@ -56,19 +56,27 @@ namespace Lab8_ZPO
 
             await Task.Run(() =>
             {
+                EContext context = EContext.ForPrecision(digits + 5).WithRounding(ERounding.HalfEven); // context ustawia precyzje + kilka cyfr; WithRounding ustawia zaokrąglanie
+
                 Parallel.For(0, terms, new ParallelOptions { CancellationToken = cancellationToken }, () => EDecimal.Zero, //0.0
                     (i, loopState, local) =>
                     {
-                        EContext context = EContext.ForPrecision(digits + 5).WithRounding(ERounding.HalfEven); // context ustawia precyzje + kilka cyfr; WithRounding ustawia zaokrąglanie
-                        
-                        while (_isPaused)
-                            Thread.Sleep(50);
-
-                        if (cancellationToken.IsCancellationRequested)
-                            loopState.Stop();
+                        if (Volatile.Read(ref _isPaused))
+                        {
+                            stopwatch.Stop();
+                            while (Volatile.Read(ref _isPaused))
+                            {
+                                Thread.Sleep(50);
+                                if (cancellationToken.IsCancellationRequested)
+                                {
+                                    loopState.Stop();
+                                    return local;
+                                }
+                            }
+                            stopwatch.Start();
+                        }
 
                         // PRZED ZAMIANĄ NA EDECIMAL: double term = 1.0 / (2 * i + 1);
-                        //EContext context = EContext.ForPrecision(digits + 5).WithRounding(ERounding.HalfEven); // context ustawia precyzje + kilka cyfr; WithRounding ustawia zaokrąglanie
                         EDecimal denominator = EDecimal.FromInt32(2 * i + 1); // konwersja int -> edecimal
                         EDecimal term = EDecimal.One.Divide(denominator, context);
                         if (i % 2 != 0)
@@ -77,7 +85,7 @@ namespace Lab8_ZPO
                         local = local.Add(term);
                         Interlocked.Increment(ref calculatedDigits);
 
-                        // UI UPDATE CO 1000 iteracji (można zmienić)
+                        // UI UPDATE
                         int current = Interlocked.Increment(ref calculatedDigits);
                         if (current - lastReported >= terms/100)
                         {
@@ -85,11 +93,12 @@ namespace Lab8_ZPO
 
                             Dispatcher.Invoke(() =>
                             {
-                                amountOfNumbersCalculated.Text = (calculatedDigits / 2).ToString();
-                                piCalculatrionProgressBar.Value = (double)calculatedDigits / terms * 100;
+                                double effectiveProgress = Math.Min(1.0, (double)calculatedDigits / terms); // terms = digits * 10;
+                                amountOfNumbersCalculated.Text = Math.Min(digits, calculatedDigits / 10).ToString();
+                                piCalculatrionProgressBar.Value = effectiveProgress * 100;
 
                                 var elapsed = stopwatch.Elapsed.TotalSeconds;
-                                var estTotal = elapsed / (double)calculatedDigits * terms;
+                                var estTotal = elapsed / effectiveProgress;
                                 var estRemaining = Math.Max(0, estTotal - elapsed);
                                 remainingTimeTextBlock.Text = $"{Math.Round(estRemaining, 2)} s";
                             });
