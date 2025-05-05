@@ -9,9 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="resources\calculator_icon.png" />
-    <None Remove="resources\exponentiation_icon.png" />
-    <None Remove="resources\pi_icon.png" />
+    <None Remove="resources\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,23 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\calculator_icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resources\exponentiation_icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="resources\pi_icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EditorConfigFiles Remove="C:\Users\Daniel\source\repos\Lab8_ZPO\Lab8_ZPO\Lab8_ZPO\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Users\Daniel\source\repos\Lab8_ZPO\Lab8_ZPO\Lab8_ZPO\.editorconfig" />
+    <Resource Include="resources\**" />
   </ItemGroup>
 
 </Project>
