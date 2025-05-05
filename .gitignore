@@ -603,3 +603,6 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,csharp,windows
 /Lab8_ZPO/Lab8_ZPO/Lab8_ZPO.csproj.user
+/Lab8_ZPO/Lab8_ZPO/bin/Debug/net8.0-windows/Lab8_ZPO.dll
+/Lab8_ZPO/Lab8_ZPO/bin/Debug/net8.0-windows/Lab8_ZPO.exe
+/Lab8_ZPO/Lab8_ZPO/bin/Debug/net8.0-windows/Lab8_ZPO.pdb
