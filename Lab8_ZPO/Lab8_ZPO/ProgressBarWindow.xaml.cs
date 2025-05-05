@@ -46,7 +46,9 @@ namespace Lab8_ZPO
 
         private async Task CalculatePiAsync(int digits, CancellationToken cancellationToken)
         {
+            // im większy mnożnik digits tym większa dokładność wyniku
             int terms = digits * 10;
+            // zmienna do przechowywania obliczonej wartości pi
             EDecimal sum = EDecimal.Zero; //0.0
             object lockObj = new object();
             int calculatedDigits = 0;
@@ -54,15 +56,20 @@ namespace Lab8_ZPO
 
             int lastReported = 0; // zmienna do przechowywania ostatnio zgłoszonej wartości
 
+            // używanie asynchronicznie dostępnych wątków bez blokowania głównego wątku
             await Task.Run(() =>
             {
-                EContext context = EContext.ForPrecision(digits + 5).WithRounding(ERounding.HalfEven); // context ustawia precyzje + kilka cyfr; WithRounding ustawia zaokrąglanie
+                // context ForPrecision wymaga pondanej ilość liczb + dowolny zapas aby uniknąć błędów w zaokrąglaniu
+                // HalfEven oznacza że jeśli liczba do zaokrąglenia jest równa 5 to zaokrągla w górę lub w doł w zależności od tego czy ostatnia liczba była parzysta czy nie
+                // parzyta = w dół, nieparzysta = w górę
+                EContext context = EContext.ForPrecision(digits + 5).WithRounding(ERounding.HalfEven);
 
                 Parallel.For(0, terms, new ParallelOptions { CancellationToken = cancellationToken }, () => EDecimal.Zero, //0.0
                     (i, loopState, local) =>
                     {
                         if (Volatile.Read(ref _isPaused))
                         {
+                            // pauzowanie stopwatcha kiedy wątek jest wstrzymany aby nie zawyżał czasu
                             stopwatch.Stop();
                             while (Volatile.Read(ref _isPaused))
                             {
@@ -76,16 +83,25 @@ namespace Lab8_ZPO
                             stopwatch.Start();
                         }
 
-                        // PRZED ZAMIANĄ NA EDECIMAL: double term = 1.0 / (2 * i + 1);
-                        EDecimal denominator = EDecimal.FromInt32(2 * i + 1); // konwersja int -> edecimal
-                        EDecimal term = EDecimal.One.Divide(denominator, context);
-                        if (i % 2 != 0)
-                            term = term.Negate();
+                        /* Algorytm korzysta z szeregu Gregory'ego Leibniza */
+                        /*                                                  */
+                        /*            /      1     1     1     1        \   */
+                        /*    π = 4 * | 1 - --- + --- - --- + --- - ... |   */
+                        /*            \      3     5     7     9        /   */
+                        /*                                                  */
+                        /*  Dokładniejszy wzór znajduje się w specyfikacji  */
 
+                        // PRZED ZAMIANĄ NA EDECIMAL: double term = 1.0 / (2 * i + 1);
+                        EDecimal denominator = EDecimal.FromInt32(2 * i + 1); // 1, 3, 5, 7...
+                        EDecimal term = EDecimal.One.Divide(denominator, context); // 1 / (2 * n + 1)
+                        if (i % 2 != 0)
+                            term = term.Negate(); // -1, +1, -1, +1...
+
+                        // dodawnie do sumy lokalnej
                         local = local.Add(term);
                         Interlocked.Increment(ref calculatedDigits);
 
-                        // UI UPDATE
+                        // update ui: upłynięty czas oraz progressbar
                         int current = Interlocked.Increment(ref calculatedDigits);
                         if (current - lastReported >= terms/100)
                         {
@@ -104,18 +120,20 @@ namespace Lab8_ZPO
                             });
                         }
 
+                        // zwraca obliczoną liczbę pi
                         return local;
                     },
                     local =>
                     {
                         lock (lockObj)
                         {
-                            // sum += local;
+                            // dodanie obliczonej wartości do zmiennej sum
                             sum = sum.Add(local);
                         }
                     });
             });
 
+            // aby było zgodnie ze wzorem z szeregu Leibniza wynik należy pomnożyć razy 4
             // PRZED ZAMIANĄ NA EDECIMAL: double pi = 4 * sum;
             EDecimal pi = sum.Multiply(EDecimal.FromInt32(4));
             stopwatch.Stop();
@@ -143,10 +161,11 @@ namespace Lab8_ZPO
 
             for (int i = 0; i < fractionalPart.Length; i += 150)
             {
-                int chunkLenght = Math.Min(150, fractionalPart.Length - i);
-                formattedPi.AppendLine(fractionalPart.Substring(i, chunkLenght));
+                int chunkLength = Math.Min(150, fractionalPart.Length - i);
+                formattedPi.AppendLine(fractionalPart.Substring(i, chunkLength));
             }
 
+            // utworzony plik będzie się znajdował w folderze projektu /bin/Debug/net8.0-windows
             string folder = AppDomain.CurrentDomain.BaseDirectory;
             string baseName = "obliczanie_pi_";
             int fileIndex = 1;
@@ -154,6 +173,8 @@ namespace Lab8_ZPO
 
             do
             {
+                // ścierzka + nazwa + index który jest generowany o jeden index wyżej jeśli plik istnieje
+                // np. obliczanie_pi_1.txt, obliczanie_pi_2.txt itd.
                 filePath = System.IO.Path.Combine(folder, $"{baseName}{fileIndex}.txt");
                 fileIndex++;
             }
@@ -175,6 +196,7 @@ namespace Lab8_ZPO
             Close();
         }
 
+        // zapauzowanie obliczeń sprawia że przycisk "wtrzymaj" znika i pojawiają się dla użytkownika dostępne inne przyciski
         private void stopCalculatingPiButton_Click(object sender, RoutedEventArgs e)
         {
             _isPaused = true;
@@ -184,6 +206,7 @@ namespace Lab8_ZPO
             endCalculatingPiNowButton.Visibility = Visibility.Visible;
         }
 
+        // i wicewersa
         private void continueCalculatingPiButton_Click(object sender, RoutedEventArgs e)
         {
             _isPaused = false;

@@ -30,7 +30,7 @@
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Margin="15,8,8,15">
         </TextBlock>
 
-        <TextBox x:Name="userInputTextBox" TextWrapping="Wrap"
+        <TextBox x:Name="userInputTextBox" TextWrapping="Wrap" Text="{Binding UserInput, UpdateSourceTrigger=PropertyChanged}"
                  FontSize="15"
                  VerticalContentAlignment="Center"
                  Height="25" Width="190"
@@ -49,7 +49,7 @@
         <!--################-->
         <!--##### ROW 1 ####-->
         <!--################-->
-        <TextBlock x:Name="elapsedTimeTextBlock" Text="PLACEHOLDER tekst CZAS OBLICZANIA" Visibility="Collapsed"
+        <TextBlock x:Name="elapsedTimeTextBlock" Text="PLACEholder Tekst CZAS obliCZANIA" Visibility="Collapsed"
                    FontSize="15" FontWeight="Bold" Foreground="White"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Margin="15,0,0,0">
         </TextBlock>

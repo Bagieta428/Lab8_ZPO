@@ -30,4 +30,12 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Daniel\source\repos\Lab8_ZPO\Lab8_ZPO\Lab8_ZPO\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\Daniel\source\repos\Lab8_ZPO\Lab8_ZPO\Lab8_ZPO\.editorconfig" />
+  </ItemGroup>
+
 </Project>

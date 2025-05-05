@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -18,16 +19,37 @@ namespace Lab8_ZPO
     /// <summary>
     /// Logika interakcji dla klasy PiWindow.xaml
     /// </summary>
-    public partial class PiWindow : Window
+    public partial class PiWindow : Window, INotifyPropertyChanged
     {
+        // binding
+        private string _inputText;
+
+        public string UserInput
+        {
+            get => _inputText;
+            set
+            {
+                _inputText = value;
+                OnPropertyChanged(nameof(UserInput));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public PiWindow()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
+        // ten regex pozwala na wpisanie tylko cyfr od 0 do 9
         private static readonly Regex _regex = new Regex("^[0-9]{0,9}$");
 
-        // tylko cyfry
+        // możliwe wpisanie tylko cyfry
         private void UserInputTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !_regex.IsMatch(e.Text);
@@ -56,7 +78,7 @@ namespace Lab8_ZPO
         // znikanie placeholder/hint tekstu jeśli w textbox jest wpisana wartość
         private void UserInputTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(userInputTextBox.Text))
+            if (string.IsNullOrEmpty(UserInput))
             {
                 placeholderTextBlock.Visibility = Visibility.Visible;
             }
@@ -68,7 +90,8 @@ namespace Lab8_ZPO
 
         private void calculatePiButton_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(userInputTextBox.Text, out int digits) && digits > 0)
+            // wyciąganie wartości z textboxa i przekazywanie wartości do okna ProgressBarWindow
+            if (int.TryParse(UserInput, out int digits) && digits > 0)
             {
                 var progressBarWindow = new ProgressBarWindow(digits)
                 {
@@ -78,12 +101,13 @@ namespace Lab8_ZPO
                 
                 bool? result = progressBarWindow.ShowDialog();
 
+                // enable przycisku otwierania pliku oraz wyświetlenie upłyniętego czasu w tym oknie
                 if (result == true)
                 {
                     openTextFileButton.IsEnabled = true;
 
                     var elapsed = progressBarWindow.TotalElapsedTime;
-                    elapsedTimeTextBlock.Text = $"Czas obliczeń: {Math.Round(elapsed.TotalSeconds, 2)} s";
+                    elapsedTimeTextBlock.Text = $"Czas obliczeń: {Math.Round(elapsed.TotalSeconds, 2)} s"; // z dokładnością do 2 miejsc po przecinku
                     elapsedTimeTextBlock.Visibility = Visibility.Visible;
 
                     _lastSavedFilePath = progressBarWindow.LastSavedFilePath;
@@ -114,7 +138,6 @@ namespace Lab8_ZPO
                 MessageBox.Show($"Wystąpił błąd podczas otwierania pliku: {ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
         {

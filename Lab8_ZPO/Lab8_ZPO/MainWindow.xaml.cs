@@ -19,6 +19,7 @@ namespace Lab8_ZPO
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        // bidning
         private string _inputText;
         private string _outputText;
         public string InputText
@@ -52,8 +53,11 @@ namespace Lab8_ZPO
             InitializeComponent();
             DataContext = this;
             InputText = string.Empty;
+            OutputText = string.Empty;
         }
 
+        // okno służące do obliczania liczby pi
+        // nie modalne ponieważ nie chcemy blokować głównego okna
         private void calculatePiButton_Click(object sender, RoutedEventArgs e)
         {
             var piWindow = new PiWindow();
@@ -197,6 +201,7 @@ namespace Lab8_ZPO
             OutputText = string.Empty;
         }
 
+        // usuwanie jednego elementu na raz z końca
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             InputText = InputText.Length > 0 ? InputText.Substring(0, InputText.Length - 1) : string.Empty;
@@ -217,7 +222,7 @@ namespace Lab8_ZPO
             }
             catch (Exception ex)
             {
-                InputText = ("Błąd składni");
+                OutputText = ("Błąd składni");
             }
         }
     }
