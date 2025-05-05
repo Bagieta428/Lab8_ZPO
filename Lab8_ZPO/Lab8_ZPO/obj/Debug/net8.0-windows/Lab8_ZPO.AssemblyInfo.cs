@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Lab8_ZPO")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+096cd8042569c2df66cc46cd2efc15b3ec42516c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+29bdeea49e04743b4031b24b43fbb78846bcd512")]
 [assembly: System.Reflection.AssemblyProductAttribute("Lab8_ZPO")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Lab8_ZPO")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
