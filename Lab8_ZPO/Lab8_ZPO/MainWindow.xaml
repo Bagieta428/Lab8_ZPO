@@ -99,11 +99,13 @@
         </Button>
 
         <Button x:Name="exponentiationButton"
-                FontSize="25" FontWeight="Black" Background="LightSkyBlue" BorderThickness="3" BorderBrush="AliceBlue"
+                FontSize="36" FontWeight="Black" Background="LightSkyBlue" BorderThickness="3" BorderBrush="AliceBlue"
                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="6" Margin="8" Padding="4"
                 Click="exponentiationButton_Click">
-            <Image Source="resources/exponentiation_icon.png"></Image>
-            <Button.Resources>
+			<Button.Content>
+				<TextBlock><Run>x</Run><Run Typography.Variants="Superscript">n</Run></TextBlock>
+			</Button.Content>
+			<Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="8" />
                 </Style>
