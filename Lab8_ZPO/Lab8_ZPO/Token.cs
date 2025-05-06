@@ -3,11 +3,12 @@
 public enum TokenType
 {
     Number,
-    Operator,
+    Function,
+
+    Pi,
+
     LeftParenthesis,
     RightParenthesis,
-    Function,
-    Constant,
 
     Plus,
     Minus,

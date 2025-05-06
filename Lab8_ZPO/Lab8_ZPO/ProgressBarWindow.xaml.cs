@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 using PeterO.Numbers;
 
@@ -31,6 +22,12 @@ namespace Lab8_ZPO
         public int DigitsToCalculate { get; set; }
         public TimeSpan TotalElapsedTime { get; private set; }
 
+        private bool _isWindowClosing = false;
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            _isWindowClosing = true;
+            base.OnClosing(e);
+        }
         public ProgressBarWindow(int digitsToCalculate)
         {
             InitializeComponent();
@@ -56,82 +53,100 @@ namespace Lab8_ZPO
 
             int lastReported = 0; // zmienna do przechowywania ostatnio zgłoszonej wartości
 
-            // używanie asynchronicznie dostępnych wątków bez blokowania głównego wątku
-            await Task.Run(() =>
+            try
             {
-                // context ForPrecision wymaga pondanej ilość liczb + dowolny zapas aby uniknąć błędów w zaokrąglaniu
-                // HalfEven oznacza że jeśli liczba do zaokrąglenia jest równa 5 to zaokrągla w górę lub w doł w zależności od tego czy ostatnia liczba była parzysta czy nie
-                // parzyta = w dół, nieparzysta = w górę
-                EContext context = EContext.ForPrecision(digits + 5).WithRounding(ERounding.HalfEven);
+                // używanie asynchronicznie dostępnych wątków bez blokowania głównego wątku
+                await Task.Run(() =>
+                {
+                    // context ForPrecision wymaga pondanej ilość liczb + dowolny zapas aby uniknąć błędów w zaokrąglaniu
+                    // HalfEven oznacza że jeśli liczba do zaokrąglenia jest równa 5 to zaokrągla w górę lub w doł w zależności od tego czy ostatnia liczba była parzysta czy nie
+                    // parzyta = w dół, nieparzysta = w górę
+                    EContext context = EContext.ForPrecision(digits + 5).WithRounding(ERounding.HalfEven);
 
-                Parallel.For(0, terms, new ParallelOptions { CancellationToken = cancellationToken }, () => EDecimal.Zero, //0.0
-                    (i, loopState, local) =>
-                    {
-                        if (Volatile.Read(ref _isPaused))
+                    Parallel.For(0, terms, new ParallelOptions { CancellationToken = cancellationToken }, () => EDecimal.Zero, //0.0
+                        (i, loopState, local) =>
                         {
-                            // pauzowanie stopwatcha kiedy wątek jest wstrzymany aby nie zawyżał czasu
-                            stopwatch.Stop();
-                            while (Volatile.Read(ref _isPaused))
+                            if (Volatile.Read(ref _isPaused))
                             {
-                                Thread.Sleep(50);
-                                if (cancellationToken.IsCancellationRequested)
+                                // pauzowanie stopwatcha kiedy wątek jest wstrzymany aby nie zawyżał czasu
+                                stopwatch.Stop();
+                                while (Volatile.Read(ref _isPaused))
                                 {
-                                    loopState.Stop();
-                                    return local;
+                                    Thread.Sleep(50);
+                                    if (cancellationToken.IsCancellationRequested)
+                                    {
+                                        loopState.Stop();
+                                        return local;
+                                    }
                                 }
+                                stopwatch.Start();
                             }
-                            stopwatch.Start();
-                        }
 
-                        /* Algorytm korzysta z szeregu Gregory'ego Leibniza */
-                        /*                                                  */
-                        /*            /      1     1     1     1        \   */
-                        /*    π = 4 * | 1 - --- + --- - --- + --- - ... |   */
-                        /*            \      3     5     7     9        /   */
-                        /*                                                  */
-                        /*  Dokładniejszy wzór znajduje się w specyfikacji  */
+                            /* Algorytm korzysta z szeregu Gregory'ego Leibniza */
+                            /*                                                  */
+                            /*            /      1     1     1     1        \   */
+                            /*    π = 4 * | 1 - --- + --- - --- + --- - ... |   */
+                            /*            \      3     5     7     9        /   */
+                            /*                                                  */
+                            /*  Dokładniejszy wzór znajduje się w specyfikacji  */
 
-                        // PRZED ZAMIANĄ NA EDECIMAL: double term = 1.0 / (2 * i + 1);
-                        EDecimal denominator = EDecimal.FromInt32(2 * i + 1); // 1, 3, 5, 7...
-                        EDecimal term = EDecimal.One.Divide(denominator, context); // 1 / (2 * n + 1)
-                        if (i % 2 != 0)
-                            term = term.Negate(); // -1, +1, -1, +1...
+                            // PRZED ZAMIANĄ NA EDECIMAL: double term = 1.0 / (2 * i + 1);
+                            EDecimal denominator = EDecimal.FromInt32(2 * i + 1); // 1, 3, 5, 7...
+                            EDecimal term = EDecimal.One.Divide(denominator, context); // 1 / (2 * n + 1)
+                            if (i % 2 != 0)
+                                term = term.Negate(); // -1, +1, -1, +1...
 
-                        // dodawnie do sumy lokalnej
-                        local = local.Add(term);
-                        Interlocked.Increment(ref calculatedDigits);
+                            // dodawnie do sumy lokalnej
+                            local = local.Add(term);
+                            Interlocked.Increment(ref calculatedDigits);
 
-                        // update ui: upłynięty czas oraz progressbar
-                        int current = Interlocked.Increment(ref calculatedDigits);
-                        if (current - lastReported >= terms/100)
-                        {
-                            lastReported = current;
-
-                            Dispatcher.Invoke(() =>
+                            // update ui: upłynięty czas oraz progressbar
+                            int current = Interlocked.Increment(ref calculatedDigits);
+                            if (current - lastReported >= terms / 100)
                             {
-                                double effectiveProgress = Math.Min(1.0, (double)calculatedDigits / terms); // terms = digits * 10;
-                                amountOfNumbersCalculated.Text = Math.Min(digits, calculatedDigits / 10).ToString();
-                                piCalculatrionProgressBar.Value = effectiveProgress * 100;
+                                lastReported = current;
 
-                                var elapsed = stopwatch.Elapsed.TotalSeconds;
-                                var estTotal = elapsed / effectiveProgress;
-                                var estRemaining = Math.Max(0, estTotal - elapsed);
-                                remainingTimeTextBlock.Text = $"{Math.Round(estRemaining, 2)} s";
-                            });
-                        }
+                                Dispatcher.InvokeAsync(() =>
+                                {
+                                    try
+                                    {
+                                        if (!cancellationToken.IsCancellationRequested && !_isWindowClosing)
+                                        {
+                                            double effectiveProgress = Math.Min(1.0, (double)calculatedDigits / terms); // terms = digits * 10;
+                                            amountOfNumbersCalculated.Text = Math.Min(digits, calculatedDigits / 10).ToString();
+                                            piCalculatrionProgressBar.Value = effectiveProgress * 100;
 
-                        // zwraca obliczoną liczbę pi
-                        return local;
-                    },
-                    local =>
-                    {
-                        lock (lockObj)
+                                            var elapsed = stopwatch.Elapsed.TotalSeconds;
+                                            var estTotal = elapsed / effectiveProgress;
+                                            var estRemaining = Math.Max(0, estTotal - elapsed);
+                                            remainingTimeTextBlock.Text = $"{Math.Round(estRemaining, 2)} s";
+                                        }
+                                    }
+                                    catch (TaskCanceledException) { }
+                                    catch (OperationCanceledException) { }
+                                    catch (Exception) { }
+                                });
+                            }
+
+                            // zwraca obliczoną liczbę pi
+                            return local;
+                        },
+                        local =>
                         {
-                            // dodanie obliczonej wartości do zmiennej sum
-                            sum = sum.Add(local);
-                        }
-                    });
-            });
+                            lock (lockObj)
+                            {
+                                // dodanie obliczonej wartości do zmiennej sum
+                                sum = sum.Add(local);
+                            }
+                        });
+                });
+            }
+            catch (OperationCanceledException)
+            {
+                MessageBox.Show("Obliczenia przerwane przez użytkownika", "Anulowao", MessageBoxButton.OK, MessageBoxImage.Information);
+                DialogResult = false;
+                Close();
+            }
 
             // aby było zgodnie ze wzorem z szeregu Leibniza wynik należy pomnożyć razy 4
             // PRZED ZAMIANĄ NA EDECIMAL: double pi = 4 * sum;

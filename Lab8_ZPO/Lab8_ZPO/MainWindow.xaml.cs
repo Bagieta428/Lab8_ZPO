@@ -1,14 +1,5 @@
-﻿using System.Collections.Specialized;
-using System.Text;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using System.ComponentModel;
 
@@ -68,131 +59,157 @@ namespace Lab8_ZPO
         private void sinButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "sin(";
+            OutputText = string.Empty;
         }
 
         private void cosButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "cos(";
+            OutputText = string.Empty;
         }
 
         private void tanButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "tan(";
+            OutputText = string.Empty;
         }
 
         private void rootButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "sqrt(";
+            OutputText = string.Empty;
         }
 
         private void divideXXButton_Click(object sender, RoutedEventArgs e)
         {
-
+            // no clue how to implement this
+            OutputText = string.Empty;
         }
 
         private void piButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "π";
+            OutputText = string.Empty;
         }
 
         private void exponentiationButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "^";
+            OutputText = string.Empty;
         }
 
         private void logarithmButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "log(";
+            OutputText = string.Empty;
         }
 
         private void zeroButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "0";
+            OutputText = string.Empty;
         }
 
         private void oneButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "1";
+            OutputText = string.Empty;
         }
 
         private void twoButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "2";
+            OutputText = string.Empty;
         }
 
         private void threeButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "3";
+            OutputText = string.Empty;
         }
 
         private void fourButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "4";
+            OutputText = string.Empty;
         }
 
         private void fiveButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "5";
+            OutputText = string.Empty;
         }
 
         private void sixButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "6";
+            OutputText = string.Empty;
         }
 
         private void sevenButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "7";
+            OutputText = string.Empty;
         }
 
         private void eightButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "8";
+            OutputText = string.Empty;
         }
 
         private void nineButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "9";
+            OutputText = string.Empty;
         }
 
         private void commaButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += ",";
+            OutputText = string.Empty;
         }
 
         private void addMinusButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "(-";
+            OutputText = string.Empty;
         }
 
         private void parenthesisLeftButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "(";
+            OutputText = string.Empty;
         }
 
         private void parenthesisRightButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += ")";
+            OutputText = string.Empty;
         }
 
         private void divideButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "/";
+            OutputText = string.Empty;
         }
 
         private void multiplicationButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "*";
+            OutputText = string.Empty;
         }
 
         private void minusButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "-";
+            OutputText = string.Empty;
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
             InputText += "+";
+            OutputText = string.Empty;
         }
 
         private void clearAllButton_Click(object sender, RoutedEventArgs e)
@@ -205,6 +222,7 @@ namespace Lab8_ZPO
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             InputText = InputText.Length > 0 ? InputText.Substring(0, InputText.Length - 1) : string.Empty;
+            OutputText = string.Empty;
         }
 
         private void calculateButton_Click(object sender, RoutedEventArgs e)
@@ -220,7 +238,7 @@ namespace Lab8_ZPO
                 var result = expression.Evaluate();
                 OutputText = result.ToString();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 OutputText = ("Błąd składni");
             }

@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="90" />
             <RowDefinition Height="90" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="0" />
             <RowDefinition Height="0" />
             <RowDefinition Height="50" />
             <RowDefinition Height="80" />
@@ -44,13 +44,13 @@
         </Border>
 
         <Border x:Name="border2"
-                BorderThickness="2" BorderBrush="LightGray"
+                BorderThickness="2" BorderBrush="White"
                 Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8,0,8,8">
         </Border>
 
         <TextBlock x:Name="inputTextBlock" Text="{Binding InputText, Mode=OneWay}" TextWrapping="NoWrap"
                    FontSize="40" FontWeight="DemiBold" Foreground="White"
-                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Margin="8" Padding="15,15,0,0">
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Margin="8" Padding="20,15,0,0">
         </TextBlock>
 
         <!--################-->
@@ -58,16 +58,9 @@
         <!--################-->
         <TextBlock x:Name="outputTextBlock" Text="{Binding OutputText, Mode=OneWay}" TextWrapping="Wrap"
                    FontSize="40" FontWeight="SemiBold" Foreground="White"
-                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8" Padding="15,6,0,0">
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="7" Margin="8" Padding="20,4,0,0">
 
         </TextBlock>
-
-        <!--################-->
-        <!--##### ROW 2 ####-->
-        <!--################-->
-        <ProgressBar x:Name="calculatrionProgressBar" Value="20" Maximum="100"
-                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="7" Margin="8">
-        </ProgressBar>
 
         <!--###########################-->
         <!--######### BUTTONS #########-->

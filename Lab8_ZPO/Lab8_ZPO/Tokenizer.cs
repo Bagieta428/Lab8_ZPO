@@ -3,12 +3,7 @@ using System.Text;
 
 public class Tokenizer
 {
-    private static readonly HashSet<string> Operators = new() { "+", "-", "*", "/", "^" };
     private static readonly HashSet<string> Functions = new() { "sin", "cos", "tan", "sqrt", "log" };
-    private static readonly Dictionary<string, string> Constants = new()
-    {
-        { "π", Math.PI.ToString() }
-    };
 
     public List<Token> Tokenize(string input)
 	{
@@ -25,7 +20,8 @@ public class Tokenizer
                 continue;
             }
 
-            // liczba lub przecinek
+            // UŻYCIE PRZECINKA NIE DZIAŁA, wywala exception
+            // liczby i przecinek
             if (char.IsDigit(c) || c == ',')
             {
                 StringBuilder number = new();
@@ -39,9 +35,26 @@ public class Tokenizer
             }
 
             // operator
-            if (Operators.Contains(c.ToString()))
+            if ("+-*/^".Contains(c))
             {
-                tokens.Add(new Token(TokenType.Operator, c.ToString()));
+                switch (c)
+                {
+                    case '+':
+                        tokens.Add(new Token(TokenType.Plus, c.ToString()));
+                        break;
+                    case '-':
+                        tokens.Add(new Token(TokenType.Minus, c.ToString()));
+                        break;
+                    case '*':
+                        tokens.Add(new Token(TokenType.Multiply, c.ToString()));
+                        break;
+                    case '/':
+                        tokens.Add(new Token(TokenType.Divide, c.ToString()));
+                        break;
+                    case '^':
+                        tokens.Add(new Token(TokenType.Power, c.ToString()));
+                        break;
+                }
                 i++;
                 continue;
             }
@@ -60,10 +73,10 @@ public class Tokenizer
                 continue;
             }
 
-            // stałe
-            if (Constants.ContainsKey(c.ToString()))
+            // pi
+            if (c == 'π')
             {
-                tokens.Add(new Token(TokenType.Constant, Constants[c.ToString()]));
+                tokens.Add(new Token(TokenType.Pi, Math.PI.ToString()));
                 i++;
                 continue;
             }

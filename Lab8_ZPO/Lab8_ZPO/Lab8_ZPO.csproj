@@ -20,4 +20,13 @@
     <Resource Include="resources\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Update="resources\calculator_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Update="resources\pi_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>
