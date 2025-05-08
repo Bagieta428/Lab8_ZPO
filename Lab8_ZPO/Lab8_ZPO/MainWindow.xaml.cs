@@ -5,9 +5,6 @@ using System.ComponentModel;
 
 namespace Lab8_ZPO
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         // bidning

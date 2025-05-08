@@ -8,9 +8,6 @@ using PeterO.Numbers;
 
 namespace Lab8_ZPO
 {
-    /// <summary>
-    /// Logika interakcji dla klasy ProgressBarWindow.xaml
-    /// </summary>
     public partial class ProgressBarWindow : Window
     {
         private CancellationTokenSource _cts;

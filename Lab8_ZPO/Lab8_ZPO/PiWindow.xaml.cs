@@ -7,9 +7,6 @@ using System.Windows.Input;
 
 namespace Lab8_ZPO
 {
-    /// <summary>
-    /// Logika interakcji dla klasy PiWindow.xaml
-    /// </summary>
     public partial class PiWindow : Window, INotifyPropertyChanged
     {
         // binding

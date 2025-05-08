@@ -22,6 +22,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="90" />
             <RowDefinition Height="90" />
+            <!-- zdaje sobie sprawę że posiadanie wierzy których tak na prawdę nie ma to zła praktyka ale przemieszczanie każdego przycisku
+                 zajełaby zbyt dłguo -->
             <RowDefinition Height="0" />
             <RowDefinition Height="0" />
             <RowDefinition Height="50" />

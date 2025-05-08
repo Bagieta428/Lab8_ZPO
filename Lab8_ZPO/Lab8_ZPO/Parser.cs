@@ -11,26 +11,27 @@ public class Parser
         _tokens = tokens;
     }
 
-    /*      DRZEWO BINARNE                  ######           ######         #    #                                   */
-    /*                                           #                #         #    #                                   */
-    /*           [+]                             #     #          #   # #   #    #                                   */
-    /*           / \                        ######   #####   ######    #    ######                                   */
-    /*          /   \                       #          #          #   # #        #                                   */
-    /*         2    [*]                     #                     #              #                                   */
-    /*              / \                     ######           ######              #                                   */
-    /*             /   \                                                                                             */
-    /*            3     4                                                                                            */
-    /*                                                                                                               */
-    /*  1. Parser zaczyna od metody [ParseAddSubstract]: widzi wyrażenie [2 + 3 * 4]                                 */
-    /*  2. [ParseAddSubstract] wywołuje [ParseMultiplyDivide] i parsuje [2] jako zmienną [expr]                      */
-    /*  3. Wykrywa operator [+] więc zapisuje go do zmiennej [op] i wywołuje [ParseMultiplyDivide] dla [3 * 4]       */
-    /*  4. [ParseMultiplyDivide] parsuje [3] jako zmienną expr i wykrywa [*] potem parsuje [4] jako zmienną [right]  */
-    /*  5. [expr] wygląda teraz tak: BinaryExpression(3, 4, Multiply)                                                */
-    /*  6. Wracamy do [ParseAddSubstract] które teraz ma przypisane wartości:                                        */
-    /*      - expr = 2                                                                                               */
-    /*      - right = BinaryExpression(3, 4, Multiply)                                                               */
-    /*      - op = Plus                                                                                              */
-    /*  7. Ostatecznie [expr] wygląda tak: BinaryExpression(2, BinaryExpression(3, 4, Multiply), Plus)               */
+    /*  =DRZEWO BINARNE= =DRZEWO BINARNE= =DRZEWO BINARNE= =DRZEWO BINARNE= =DRZEWO BINARNE= =DRZEWO BINARNE= =DRZEWO BINARNE= =DRZEWO BINARNE=  */
+    /*                                                                                                                                           */
+    /*           [+]                                 ######           ######         #    #                                                      */
+    /*           / \                                      #                #         #    #                                                      */
+    /*          /   \                                     #     #          #   # #   #    #                                                      */
+    /*         2    [*]                              ######   #####   ######    #    ######                                                      */
+    /*              / \                              #          #          #   # #        #                                                      */
+    /*             /   \                             #                     #              #                                                      */
+    /*            3     4                            ######           ######              #                                                      */                                                                                                                 */
+    /*                                                                                                                                           */
+    /*  1. Parser zaczyna od metody [ParseAddSubstract]: widzi wyrażenie [2 + 3 * 4]                                                             */
+    /*  2. [ParseAddSubstract] wywołuje [ParseMultiplyDivide] i parsuje [2] jako zmienną [expr]                                                  */
+    /*  3. Wykrywa operator [+] więc zapisuje go do zmiennej [op] i wywołuje [ParseMultiplyDivide] dla dalszej częśc działania ([3 * 4])         */
+    /*  4. [ParseMultiplyDivide] parsuje [3] jako zmienną [expr] i wykrywa [*], potem parsuje [4] jako zmienną [right]                           */
+    /*  5. [expr] wygląda teraz tak: BinaryExpression(3, 4, Multiply)                                                                            */
+    /*  6. Wracamy do [ParseAddSubstract] które teraz ma przypisane wartości:                                                                    */
+    /*      - expr = 2                                                                                                                           */
+    /*      - right = BinaryExpression(3, 4, Multiply)                                                                                           */
+    /*      - op = Plus                                                                                                                          */
+    /*  7. Ostatecznie [expr] wygląda tak: BinaryExpression(2, BinaryExpression(3, 4, Multiply), Plus)                                           */
+    /*  8. Wykonując [Evaluate](Expressions.cs) na tym wyrażeniu otrzymujemy wynik: 2 + (3 * 4) = 14                                             */
 
 
     // parser działa rekurencyjnie. każda metoda wywołuje kolejną metodę, która parsuje podane wyrażenie o wyższym priorytecie
